@@ -10,7 +10,7 @@ $ hujitatsu '紅だァーーーーッ!!'
 ```
 
 ```shell
-$ echo '紅だァーーーーッ!!' | ./hujitatsu
+$ echo '紅だァーーーーッ!!' | hujitatsu
 紅゛だ゛ァ゛ー゛ー゛ー゛ー゛ッ゛!゛!
 ```
 
