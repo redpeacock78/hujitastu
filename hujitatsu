@@ -1,0 +1,99 @@
+#! /usr/bin/env bash
+
+#hujitastu 0.0.1
+# (C) 2019 redpeacock78
+# GPLv3 is applied to this script
+
+######################################
+#Converts a sentence to Fujiwara Tatsuya-style or restores it.
+#Grobals:
+#  none
+#Arguments:
+#  -d
+#  -h
+#Returns:
+#  None
+######################################
+
+
+###USAGE###
+function usage(){
+cat << EOS >&2
+hujitatsu version 0.0.1
+Usage: hujitatsu [OPTION] [ARGS]
+
+Hujitatsu(Hujiwara Tatsuya) encode or decode ARGS, or standard input, to standard output.
+With no ARGS, or when ARGS is -, read standard input.
+
+Options:
+    -d, --decode  decode data
+    -h, --help    show help
+EOS
+}
+
+###TEXT###
+if [[ "${#}" -gt 0 ]]; then
+  if [[ "${1}" = "-h" ]] || \
+  	 [[ "${1}" = "--help" ]]; then
+  	usage && \
+  	exit 0ht
+  elif [[ "${1}" = "-d" ]] || \
+       [[ "${1}" = "--decode" ]]; then
+    if [[ -p /dev/stdin ]]; then
+      WORDS="$(cat -)"
+      echo $(echo -en "${WORDS}" \
+      | nkf -W -w32B0 \
+      | xxd -ps -c4 \
+      | sed 's/^0*//' \
+      | sed '/309B/d' \
+      | tr a-f A-F \
+      | xargs -I ZZ dc -e "16iAo ZZ p" \
+      | xargs printf "%08X" \
+      | xxd -ps -r \
+      | nkf -W32B -w) && \
+      exit 0
+    else
+      shift && \
+      WORDS="${@:1}"
+      echo $(echo -en "${WORDS}" \
+      | nkf -W -w32B0 \
+      | xxd -ps -c4 \
+      | sed 's/^0*//' \
+      | sed '/309B/d' \
+      | tr a-f A-F \
+      | xargs -I ZZ dc -e "16iAo ZZ p" \
+      | xargs printf "%08X" \
+      | xxd -ps -r \
+      | nkf -W32B -w) && \
+      exit 0
+    fi
+  else
+  	WORDS="${@:1}"
+      echo $(echo -en "${WORDS}" \
+      | nkf -W -w32B0 \
+      | xxd -ps -c4 \
+      | sed 's/^0*//' \
+      | sed 's/$/ 309B/g' \
+      | tr " " "\n" \
+      | tr a-f A-F \
+      | xargs -I ZZ dc -e "16iAo ZZ p" \
+      | xargs printf "%08X" \
+      | xxd -ps -r \
+      | nkf -W32B -w) && \
+      exit 0
+  fi
+  else
+    WORDS="$(cat -)"
+      echo $(echo -en "${WORDS}" \
+      | nkf -W -w32B0 \
+      | xxd -ps -c4 \
+      | sed 's/^0*//' \
+      | sed 's/$/ 309B/g' \
+      | tr " " "\n" \
+      | tr a-f A-F \
+      | xargs -I ZZ dc -e "16iAo ZZ p" \
+      | xargs printf "%08X" \
+      | xxd -ps -r \
+      | nkf -W32B -w) && \
+      exit 0
+fi
