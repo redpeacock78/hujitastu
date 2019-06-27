@@ -36,7 +36,7 @@ if [[ "${#}" -gt 0 ]]; then
   if [[ "${1}" = "-h" ]] || \
   	 [[ "${1}" = "--help" ]]; then
   	usage && \
-  	exit 0ht
+  	exit 0
   elif [[ "${1}" = "-d" ]] || \
        [[ "${1}" = "--decode" ]]; then
     if [[ -p /dev/stdin ]]; then
@@ -45,7 +45,7 @@ if [[ "${#}" -gt 0 ]]; then
       | nkf -W -w32B0 \
       | xxd -ps -c4 \
       | sed 's/^0*//' \
-      | sed '/309B/d' \
+      | sed '/309b/d' \
       | tr a-f A-F \
       | xargs -I ZZ dc -e "16iAo ZZ p" \
       | xargs printf "%08X" \
@@ -59,7 +59,7 @@ if [[ "${#}" -gt 0 ]]; then
       | nkf -W -w32B0 \
       | xxd -ps -c4 \
       | sed 's/^0*//' \
-      | sed '/309B/d' \
+      | sed '/309b/d' \
       | tr a-f A-F \
       | xargs -I ZZ dc -e "16iAo ZZ p" \
       | xargs printf "%08X" \
