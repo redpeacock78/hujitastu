@@ -25,7 +25,7 @@ $ echo '紅゛だ゛ァ゛ー゛ー゛ー゛ー゛ッ゛!゛!゛' | hujitatsu -d
 ```
 
 ```shell
-$hujitatsu -h
+$ hujitatsu -h
 hujitatsu version 0.0.1
 Usage: hujitatsu [OPTION] [ARGS]
 
