@@ -1,4 +1,4 @@
-hujitastu(藤原竜也変換)
+hujitatsu(藤原竜也変換)
 ---
 Converts a sentence to Fujiwara Tatsuya-style or restores it.
 
