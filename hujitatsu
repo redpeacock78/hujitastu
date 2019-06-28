@@ -34,9 +34,9 @@ EOS
 ###TEXT###
 if [[ "${#}" -gt 0 ]]; then
   if [[ "${1}" = "-h" ]] || \
-  	 [[ "${1}" = "--help" ]]; then
-  	usage && \
-  	exit 0
+     [[ "${1}" = "--help" ]]; then
+    usage && \
+    exit 0
   elif [[ "${1}" = "-d" ]] || \
        [[ "${1}" = "--decode" ]]; then
     if [[ -p /dev/stdin ]]; then
@@ -68,32 +68,32 @@ if [[ "${#}" -gt 0 ]]; then
       exit 0
     fi
   else
-  	WORDS="${@:1}"
-      echo $(echo -en "${WORDS}" \
-      | nkf -W -w32B0 \
-      | xxd -ps -c4 \
-      | sed 's/^0*//' \
-      | sed 's/$/ 309B/g' \
-      | tr " " "\n" \
-      | tr a-f A-F \
-      | xargs -I ZZ dc -e "16iAo ZZ p" \
-      | xargs printf "%08X" \
-      | xxd -ps -r \
-      | nkf -W32B -w) && \
-      exit 0
+    WORDS="${@:1}"
+    echo $(echo -en "${WORDS}" \
+    | nkf -W -w32B0 \
+    | xxd -ps -c4 \
+    | sed 's/^0*//' \
+    | sed 's/$/ 309B/g' \
+    | tr " " "\n" \
+    | tr a-f A-F \
+    | xargs -I ZZ dc -e "16iAo ZZ p" \
+    | xargs printf "%08X" \
+    | xxd -ps -r \
+    | nkf -W32B -w) && \
+    exit 0
   fi
-  else
-    WORDS="$(cat -)"
-      echo $(echo -en "${WORDS}" \
-      | nkf -W -w32B0 \
-      | xxd -ps -c4 \
-      | sed 's/^0*//' \
-      | sed 's/$/ 309B/g' \
-      | tr " " "\n" \
-      | tr a-f A-F \
-      | xargs -I ZZ dc -e "16iAo ZZ p" \
-      | xargs printf "%08X" \
-      | xxd -ps -r \
-      | nkf -W32B -w) && \
-      exit 0
+else
+  WORDS="$(cat -)"
+  echo $(echo -en "${WORDS}" \
+  | nkf -W -w32B0 \
+  | xxd -ps -c4 \
+  | sed 's/^0*//' \
+  | sed 's/$/ 309B/g' \
+  | tr " " "\n" \
+  | tr a-f A-F \
+  | xargs -I ZZ dc -e "16iAo ZZ p" \
+  | xargs printf "%08X" \
+  | xxd -ps -r \
+  | nkf -W32B -w) && \
+  exit 0
 fi
